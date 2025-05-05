@@ -27,11 +27,11 @@ function CharacterSelector({ characters, selectedId, onSelect }) {
             shapeRendering="geometricPrecision"
           >
             <text
+              className="svg-text-selector"
               x="50"
               y="20"
               textAnchor="middle"
               dominantBaseline="middle"
-              fontSize="30px"
               fontWeight="bold"
               fill="silver"
               stroke="black"

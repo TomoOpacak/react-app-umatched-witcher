@@ -8,12 +8,14 @@ import jaskier from "./assets/images/jaskier_side.webp";
 import ciri from "./assets/images/ciri_hero.webp";
 import ihuarraquax from "./assets/images/ihuarraquax_side.webp";
 import leshen from "./assets/images/leshen_hero.webp";
-import wolf from "./assets/images/wolf_side.webp";
+import djikstra from "./assets/images/djikstra_side.webp";
 import philipa from "./assets/images/philipa_hero.webp";
 import triss_yen from "./assets/images/triss_yen_hero.webp";
 import eredin from "./assets/images/eredin_hero.webp";
 import TypeIcon from "./components/TypeIcon";
 import AnimatedButton from "./components/AnimatedButton";
+
+import Footer from "./components/Footer";
 
 const characters = [
   {
@@ -39,8 +41,15 @@ const characters = [
     type: "melee",
     image: ciri,
     hp: 15,
+    color: "turquoise",
     sidekicks: [
-      { name: "Ihuarraquax", type: "ranged", image: ihuarraquax, hp: 7 },
+      {
+        name: "Ihuarraquax",
+        type: "ranged",
+        image: ihuarraquax,
+        hp: 7,
+        color: "lightblue",
+      },
     ],
   },
   {
@@ -49,10 +58,8 @@ const characters = [
     type: "melee",
     image: leshen,
     hp: 13,
-    sidekicks: [
-      { name: "Wolf", type: "melee", image: wolf, hp: 1 },
-      { name: "Wolf", type: "melee", image: wolf, hp: 1 },
-    ],
+    color: "darkgreen",
+    sidekicks: [],
   },
   {
     id: 4,
@@ -60,7 +67,16 @@ const characters = [
     type: "ranged",
     image: triss_yen,
     hp: 14,
-    sidekicks: [{ name: "Triss", type: "ranged", hp: 6 }],
+    color: "crimson",
+    sidekicks: [
+      {
+        name: "Yennefer & Triss",
+        type: "ranged",
+        image: triss_yen,
+        hp: 6,
+        color: "pink",
+      },
+    ],
   },
   {
     id: 5,
@@ -68,7 +84,16 @@ const characters = [
     type: "ranged",
     image: philipa,
     hp: 12,
-    sidekicks: [{ name: "Dijkstra", type: "melee", hp: 6 }],
+    color: "orange",
+    sidekicks: [
+      {
+        name: "Dijkstra",
+        type: "melee",
+        image: djikstra,
+        hp: 6,
+        color: "beige",
+      },
+    ],
   },
   {
     id: 6,
@@ -76,12 +101,8 @@ const characters = [
     type: "melee",
     image: eredin,
     hp: 14,
-    sidekicks: [
-      { name: "Crveni Jahač", type: "melee", image: wolf, hp: 1 },
-      { name: "Crveni Jahač", type: "melee", image: wolf, hp: 1 },
-      { name: "Crveni Jahač", type: "melee", image: wolf, hp: 1 },
-      { name: "Crveni Jahač", type: "melee", image: wolf, hp: 1 },
-    ],
+    color: "darkred",
+    sidekicks: [],
   },
 ];
 
@@ -234,17 +255,7 @@ const App = () => {
 
       {selectedCharacter ? (
         <>
-          <div
-            style={{
-              display: "grid",
-
-              gridTemplateColumns: "auto auto",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "30px",
-              marginTop: "40px",
-            }}
-          >
+          <div className="character-container">
             <div style={{ textAlign: "center", position: "relative" }}>
               <div style={{ position: "relative", display: "inline-block" }}>
                 {mainHP === 0 && <RedXOverlay />}
@@ -253,8 +264,6 @@ const App = () => {
                   src={selectedCharacter.image}
                   alt={selectedCharacter.name}
                   style={{
-                    width: "150px",
-                    height: "150px",
                     display: "block",
                     border: `4px solid ${selectedCharacter.color}`,
                   }}
@@ -296,7 +305,7 @@ const App = () => {
                   <svg width="24" height="24" viewBox="0 0 24 24">
                     <text
                       x="12"
-                      y="16"
+                      y="15"
                       textAnchor="middle"
                       dominantBaseline="middle"
                       fontSize="32"
@@ -322,7 +331,7 @@ const App = () => {
                   <svg width="24" height="24" viewBox="0 0 24 24">
                     <text
                       x="12"
-                      y="16"
+                      y="15"
                       textAnchor="middle"
                       dominantBaseline="middle"
                       fontSize="32"
@@ -351,8 +360,6 @@ const App = () => {
                     src={sidekick.image}
                     alt={sidekick.name}
                     style={{
-                      width: "150px",
-                      height: "150px",
                       display: "block",
                       border: `4px solid ${sidekick.color}`,
                     }}
@@ -396,7 +403,7 @@ const App = () => {
                     <svg width="24" height="24" viewBox="0 0 24 24">
                       <text
                         x="12"
-                        y="16"
+                        y="15"
                         textAnchor="middle"
                         dominantBaseline="middle"
                         fontSize="32"
@@ -424,7 +431,7 @@ const App = () => {
                     <svg width="24" height="24" viewBox="0 0 24 24">
                       <text
                         x="12"
-                        y="16"
+                        y="15"
                         textAnchor="middle"
                         dominantBaseline="middle"
                         fontSize="32"
@@ -477,12 +484,7 @@ const App = () => {
         </>
       ) : (
         <p>
-          <svg
-            className="pick-hero"
-            width="500"
-            height="40"
-            viewBox="0 0 160 40"
-          >
+          <svg className="pick-hero" viewBox="0 0 160 40">
             <text
               x="50%"
               y="50%"
@@ -500,6 +502,9 @@ const App = () => {
           </svg>
         </p>
       )}
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 };
