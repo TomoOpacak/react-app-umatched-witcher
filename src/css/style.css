@@ -414,3 +414,16 @@ footer {
     }
   }
 }
+@media (max-width: 400px) {
+  .character-image {
+    border-radius: 12px;
+    width: 100px;
+  }
+  .svg-text-selector {
+    font-size: 15px;
+  }
+  .pick-hero {
+    width: 400px;
+    height: 28px;
+  }
+}
