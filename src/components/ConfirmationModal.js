@@ -17,14 +17,14 @@ const ConfirmationModal = ({ onConfirm, onCancel }) => (
   >
     <div
       style={{
-        background: "white",
+        background: "silver",
         padding: "30px",
         borderRadius: "12px",
         boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
         textAlign: "center",
       }}
     >
-      <p>
+      <p style={{ marginTop: "20px" }}>
         <svg width="400" height="40" viewBox="0 0 160 40">
           <text
             x="50%"

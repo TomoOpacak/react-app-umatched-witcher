@@ -11,6 +11,8 @@ import leshen from "./assets/images/leshen_hero.webp";
 import djikstra from "./assets/images/djikstra_side.webp";
 import philipa from "./assets/images/philipa_hero.webp";
 import triss_yen from "./assets/images/triss_yen_hero.webp";
+import yen from "./assets/images/yen.webp";
+import triss from "./assets/images/triss.webp";
 import eredin from "./assets/images/eredin_hero.webp";
 import TypeIcon from "./components/TypeIcon";
 import AnimatedButton from "./components/AnimatedButton";
@@ -70,9 +72,9 @@ const characters = [
     color: "crimson",
     sidekicks: [
       {
-        name: "Yennefer & Triss",
+        name: "Triss",
         type: "ranged",
-        image: triss_yen,
+        image: triss,
         hp: 6,
         color: "pink",
       },
@@ -141,11 +143,17 @@ const App = () => {
     type: null,
   });
   const [sidekickAnimations, setSidekickAnimations] = useState([]);
+  const [isYenMain, setIsYenMain] = useState(true);
 
   useEffect(() => {
     if (selectedId === null || !selectedCharacter) return;
 
     localStorage.setItem("selectedId", selectedId);
+
+    if (selectedCharacter.name === "Yennefer & Triss") {
+      const saved = localStorage.getItem("yenMain") === "false" ? false : true;
+      setIsYenMain(saved);
+    }
 
     const storedMainHP = localStorage.getItem(`mainHP-${selectedId}`);
     const main = storedMainHP
@@ -216,14 +224,26 @@ const App = () => {
       newSidekickHPs.map(() => ({ animate: false, type: null }))
     );
   };
+  const handleSwapYenTriss = () => {
+    setIsYenMain((prev) => {
+      localStorage.setItem("yenMain", !prev);
+      return !prev;
+    });
+  };
 
   return (
     <div className="main-container">
-      <CharacterSelector
-        characters={characters}
-        selectedId={selectedId}
-        onSelect={setSelectedId}
-      />
+      <div
+        className={`character-selector-wrapper ${
+          selectedId !== null ? "slide-out" : "slide-in"
+        }`}
+      >
+        <CharacterSelector
+          characters={characters}
+          selectedId={selectedId}
+          onSelect={setSelectedId}
+        />
+      </div>
 
       {selectedCharacter && (
         <AnimatedButton
@@ -247,7 +267,7 @@ const App = () => {
               strokeWidth="3"
               paintOrder="stroke"
             >
-              Poništi odabir
+              Ponovi odabir
             </text>
           </svg>
         </AnimatedButton>
@@ -257,36 +277,55 @@ const App = () => {
         <>
           <div className="character-container">
             <div style={{ textAlign: "center", position: "relative" }}>
-              <div style={{ position: "relative", display: "inline-block" }}>
-                {mainHP === 0 && <RedXOverlay />}
-                <img
-                  className="main-character-image"
-                  src={selectedCharacter.image}
-                  alt={selectedCharacter.name}
-                  style={{
-                    display: "block",
-                    border: `4px solid ${selectedCharacter.color}`,
-                  }}
-                />
+              <div className="small-character-container">
+                <div style={{ position: "relative", display: "inline-block" }}>
+                  {mainHP === 0 && <RedXOverlay />}
+                  <img
+                    className="main-character-image"
+                    src={
+                      selectedCharacter.id === 4
+                        ? isYenMain
+                          ? yen
+                          : triss
+                        : selectedCharacter.image
+                    }
+                    alt={
+                      selectedCharacter.id === 4
+                        ? isYenMain
+                          ? "Yennefer"
+                          : "Triss"
+                        : selectedCharacter.name
+                    }
+                    style={{
+                      display: "block",
+                      border: `4px solid ${selectedCharacter.color}`,
+                    }}
+                  />
+                </div>
+                <p>
+                  <svg width="160" height="40" viewBox="0 0 160 40">
+                    <text
+                      x="50%"
+                      y="50%"
+                      dominantBaseline="middle"
+                      textAnchor="middle"
+                      fontSize="20"
+                      fontWeight="bold"
+                      fill="white"
+                      stroke="black"
+                      strokeWidth="3"
+                      paintOrder="stroke"
+                    >
+                      {selectedCharacter.id === 4
+                        ? isYenMain
+                          ? "Yennefer"
+                          : "Triss"
+                        : selectedCharacter.name}
+                    </text>
+                  </svg>
+                </p>
               </div>
-              <p>
-                <svg width="160" height="40" viewBox="0 0 160 40">
-                  <text
-                    x="50%"
-                    y="50%"
-                    dominantBaseline="middle"
-                    textAnchor="middle"
-                    fontSize="20"
-                    fontWeight="bold"
-                    fill="white"
-                    stroke="black"
-                    strokeWidth="3"
-                    paintOrder="stroke"
-                  >
-                    {selectedCharacter.name}
-                  </text>
-                </svg>
-              </p>
+
               <div>
                 <TypeIcon type={selectedCharacter.type} />
               </div>
@@ -302,7 +341,7 @@ const App = () => {
                   onClick={() => updateMainHP(mainHP - 1)}
                   disabled={mainHP <= 0}
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24">
+                  <svg className="" width="24" height="24" viewBox="0 0 24 24">
                     <text
                       x="12"
                       y="15"
@@ -347,42 +386,83 @@ const App = () => {
                 </AnimatedButton>
               </div>
             </div>
-
+            {selectedCharacter.id === 4 && (
+              <div style={{ textAlign: "center", marginBottom: "1rem" }}>
+                <AnimatedButton
+                  className="swap-button"
+                  onClick={handleSwapYenTriss}
+                  title="Zamijeni Triss i Yennefer"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M4 7h11M4 7l4-4M4 7l4 4M20 17H9m11 0l-4 4m4-4l-4-4" />
+                  </svg>
+                </AnimatedButton>
+              </div>
+            )}
             {selectedCharacter.sidekicks.map((sidekick, index) => (
               <div
                 key={index}
                 style={{ textAlign: "center", position: "relative" }}
               >
-                <div style={{ position: "relative", display: "inline-block" }}>
-                  {sidekickHPs[index] === 0 && <RedXOverlay />}
-                  <img
-                    className="sidekick-image"
-                    src={sidekick.image}
-                    alt={sidekick.name}
-                    style={{
-                      display: "block",
-                      border: `4px solid ${sidekick.color}`,
-                    }}
-                  />
+                <div className="small-character-container">
+                  <div
+                    style={{ position: "relative", display: "inline-block" }}
+                  >
+                    {sidekickHPs[index] === 0 && <RedXOverlay />}
+                    <img
+                      className="sidekick-image"
+                      src={
+                        selectedCharacter.id === 4
+                          ? isYenMain
+                            ? triss
+                            : yen
+                          : sidekick.image
+                      }
+                      alt={
+                        selectedCharacter.id === 4
+                          ? isYenMain
+                            ? "Triss"
+                            : "Yennefer"
+                          : sidekick.name
+                      }
+                      style={{
+                        display: "block",
+                        border: `4px solid ${sidekick.color}`,
+                      }}
+                    />
+                  </div>
+                  <p>
+                    <svg width="160" height="40" viewBox="0 0 160 40">
+                      <text
+                        x="50%"
+                        y="50%"
+                        dominantBaseline="middle"
+                        textAnchor="middle"
+                        fontSize="20"
+                        fontWeight="bold"
+                        fill="white"
+                        stroke="black"
+                        strokeWidth="3"
+                        paintOrder="stroke"
+                      >
+                        {selectedCharacter.id === 4
+                          ? isYenMain
+                            ? "Triss"
+                            : "Yennefer"
+                          : sidekick.name}
+                      </text>
+                    </svg>
+                  </p>
                 </div>
-                <p>
-                  <svg width="160" height="40" viewBox="0 0 160 40">
-                    <text
-                      x="50%"
-                      y="50%"
-                      dominantBaseline="middle"
-                      textAnchor="middle"
-                      fontSize="20"
-                      fontWeight="bold"
-                      fill="white"
-                      stroke="black"
-                      strokeWidth="3"
-                      paintOrder="stroke"
-                    >
-                      {sidekick.name}
-                    </text>
-                  </svg>
-                </p>
                 <div className="flex items-center gap-2">
                   <TypeIcon type={sidekick.type} />
                 </div>

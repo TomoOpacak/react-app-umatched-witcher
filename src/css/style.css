@@ -67,9 +67,6 @@
 
 .character.selected {
   transform: translateY(-6px) scale(1.15);
-  border: 2px solid #444; /* Start fully visible */
-  animation: fadeBorder 0.5s forwards;
-  border-radius: 16px; /* Optional: for rounded look */
 }
 @keyframes fadeBorder {
   0% {
@@ -114,16 +111,23 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
+.small-character-container {
+  width: 150px;
+  margin: 0 auto;
+  transition: transform 0.2s ease;
+}
+.small-character-container:hover {
+  transform: translateY(-6px) scale(1.05);
+}
 .hp-button {
   width: 36px;
   height: 36px;
   font-size: 20px;
   font-weight: bold;
-  border-radius: 50%;
-  border: 2px solid #444;
-  background-color: #fff;
-  color: #222;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+  border: none;
+  background-color: #ffffff00;
+
   cursor: pointer;
   text-align: center;
   line-height: 32px;
@@ -132,9 +136,7 @@
 }
 
 .hp-button:hover {
-  background-color: #eee;
-  transform: scale(1.05);
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  transform: scale(1.15);
 }
 
 .hp-button:disabled {
@@ -213,6 +215,7 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 .rpg-button {
@@ -225,6 +228,7 @@
   cursor: pointer;
 
   transition: all 0.2s ease-in-out;
+  margin-bottom: 24px;
 }
 
 .rpg-button:hover {
@@ -290,7 +294,7 @@
   margin-top: 20px;
 }
 .svg-text-selector {
-  font-size: 30px;
+  font-size: 28px;
 }
 
 footer {
@@ -307,6 +311,52 @@ footer {
   align-items: center;
 }
 
+.character-selector-wrapper {
+  max-height: 1000px; /* adjust based on expected content size */
+  opacity: 1;
+  overflow: hidden;
+  padding: 20px 0;
+  margin-bottom: 20px;
+  transition: max-height 0.6s ease-in-out, opacity 0.4s ease-in-out,
+    padding 0.4s ease-in-out, margin 0.4s ease-in-out;
+}
+
+.character-selector-wrapper.slide-out {
+  max-height: 0;
+  opacity: 0;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.character-selector-wrapper.slide-in {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.swap-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #444; /* or your preferred accent */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  margin: 1rem auto; /* center horizontally */
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  position: relative;
+  top: -100px;
+}
+
+.swap-button:hover {
+  background-color: #666;
+  transform: rotate(180deg);
+  transform: scale(1.15);
+}
+
 @media (max-width: 768px) {
   .main-container {
     width: 100%;
@@ -316,20 +366,23 @@ footer {
   }
   .character-image {
     border-radius: 12px;
-    width: 150px;
+    width: 180px;
   }
   .svg-text-selector {
-    font-size: 28px;
+    font-size: 26px;
   }
   .character-selector {
     gap: 10px;
+  }
+  .swap-button {
+    top: 0px;
   }
 }
 
 @media (max-width: 600px) {
   .character-image {
     border-radius: 12px;
-    width: 125px;
+    width: 150px;
   }
   .svg-text-selector {
     font-size: 22px;
@@ -343,14 +396,14 @@ footer {
 @media (max-width: 500px) {
   .character-image {
     border-radius: 12px;
-    width: 100px;
+    width: 125px;
   }
   .svg-text-selector {
     font-size: 18px;
   }
   .pick-hero {
     width: 400px;
-    height: 35px;
+    height: 28px;
   }
   .character-selector {
     gap: 0px;
