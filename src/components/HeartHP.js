@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/style.css";
 
-const HeartHP = ({ hp, animate, damageOrHeal }) => {
+const HeartHP = ({ hp, animate, damageOrHeal, color = "red" }) => {
   const animationClass = animate
     ? damageOrHeal === "healed"
       ? "heart-animate-outwards"
@@ -39,7 +39,7 @@ const HeartHP = ({ hp, animate, damageOrHeal }) => {
         <path
           d="M35,8c-4.5,0-8.4,3-10,7.1C23.4,11,19.5,8,15,8C8.9,8,4,13.3,4,19.5
             C4,30,25,44,25,44s21-14,21-24.5C46,13.3,41.1,8,35,8z"
-          fill="red"
+          fill={color}
           stroke="white"
           strokeWidth="1"
           filter="url(#heartShadow)"

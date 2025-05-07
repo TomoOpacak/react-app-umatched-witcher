@@ -17,8 +17,9 @@ const ConfirmationModal = ({ onConfirm, onCancel }) => (
   >
     <div
       style={{
-        background: "silver",
+        background: "grey",
         padding: "30px",
+        border: "2px solid white",
         borderRadius: "12px",
         boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
         textAlign: "center",

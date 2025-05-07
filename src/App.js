@@ -247,28 +247,27 @@ const App = () => {
 
       {selectedCharacter && (
         <AnimatedButton
-          className="rpg-button"
+          className="back-button"
           onClick={() => {
             setSelectedId(null);
             localStorage.setItem("selectedId", "null");
           }}
           style={{ marginTop: "20px" }}
         >
-          <svg width="160" height="40" viewBox="0 0 160 40">
-            <text
-              x="50%"
-              y="55%"
-              dominantBaseline="middle"
-              textAnchor="middle"
-              fontSize="20"
-              fontWeight="bold"
-              fill="white"
-              stroke="black"
-              strokeWidth="3"
-              paintOrder="stroke"
-            >
-              Ponovi odabir
-            </text>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ transform: "translateY(-1px)" }}
+          >
+            <polyline points="9 18 3 12 9 6" />
+            <path d="M3 12h12a6 6 0 0 1 0 12" />
           </svg>
         </AnimatedButton>
       )}
@@ -362,6 +361,7 @@ const App = () => {
                   hp={mainHP}
                   animate={mainAnimation.animate}
                   damageOrHeal={mainAnimation.type}
+                  color={selectedCharacter.color}
                 />
                 <AnimatedButton
                   className="hp-button"
@@ -501,6 +501,7 @@ const App = () => {
                     hp={sidekickHPs[index]}
                     animate={sidekickAnimations[index]?.animate}
                     damageOrHeal={sidekickAnimations[index]?.type}
+                    color={sidekick.color}
                   />
                   <AnimatedButton
                     className="hp-button"
