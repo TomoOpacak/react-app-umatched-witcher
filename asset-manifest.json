@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react-app-umatched-witcher/static/css/main.8c2f5aa2.css",
-    "main.js": "/react-app-umatched-witcher/static/js/main.7a4da2fe.js",
+    "main.css": "/react-app-umatched-witcher/static/css/main.804d05b1.css",
+    "main.js": "/react-app-umatched-witcher/static/js/main.daac5f07.js",
     "static/js/453.01d26f34.chunk.js": "/react-app-umatched-witcher/static/js/453.01d26f34.chunk.js",
     "static/media/philipa_hero.webp": "/react-app-umatched-witcher/static/media/philipa_hero.475ca658eff96a1d1b7c.webp",
     "static/media/yen.webp": "/react-app-umatched-witcher/static/media/yen.4b1950dbeddb2d432b8b.webp",
@@ -15,12 +15,12 @@
     "static/media/ihuarraquax_side.webp": "/react-app-umatched-witcher/static/media/ihuarraquax_side.ffded2aac1e5c0198a58.webp",
     "static/media/djikstra_side.webp": "/react-app-umatched-witcher/static/media/djikstra_side.4b49b8cff1189234178b.webp",
     "index.html": "/react-app-umatched-witcher/index.html",
-    "main.8c2f5aa2.css.map": "/react-app-umatched-witcher/static/css/main.8c2f5aa2.css.map",
-    "main.7a4da2fe.js.map": "/react-app-umatched-witcher/static/js/main.7a4da2fe.js.map",
+    "main.804d05b1.css.map": "/react-app-umatched-witcher/static/css/main.804d05b1.css.map",
+    "main.daac5f07.js.map": "/react-app-umatched-witcher/static/js/main.daac5f07.js.map",
     "453.01d26f34.chunk.js.map": "/react-app-umatched-witcher/static/js/453.01d26f34.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8c2f5aa2.css",
-    "static/js/main.7a4da2fe.js"
+    "static/css/main.804d05b1.css",
+    "static/js/main.daac5f07.js"
   ]
 }
