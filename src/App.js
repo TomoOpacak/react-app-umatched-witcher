@@ -14,6 +14,7 @@ import triss_yen from "./assets/images/triss_yen_hero.webp";
 import yen from "./assets/images/yen.webp";
 import triss from "./assets/images/triss.webp";
 import eredin from "./assets/images/eredin_hero.webp";
+import upcoming from "./assets/images/upcoming_hero.webp";
 import TypeIcon from "./components/TypeIcon";
 import AnimatedButton from "./components/AnimatedButton";
 
@@ -102,6 +103,33 @@ const characters = [
     name: "Eredin",
     type: "melee",
     image: eredin,
+    hp: 14,
+    color: "darkred",
+    sidekicks: [],
+  },
+  {
+    id: 7,
+    name: "Dame Šume",
+    type: "melee",
+    image: upcoming,
+    hp: 14,
+    color: "darkred",
+    sidekicks: [],
+  },
+  {
+    id: 8,
+    name: "Detlaff",
+    type: "melee",
+    image: upcoming,
+    hp: 14,
+    color: "darkred",
+    sidekicks: [],
+  },
+  {
+    id: 9,
+    name: "Uskoro Dolazi",
+    type: "melee",
+    image: upcoming,
     hp: 14,
     color: "darkred",
     sidekicks: [],
