@@ -14,8 +14,12 @@
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-
   text-align: center;
+  user-select: none; /* Standard */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE/Edge */
+  -webkit-touch-callout: none; /* iOS: prevent callout (long-press menu) */
+  -webkit-tap-highlight-color: transparent; /* Remove blue highlight on tap */
 }
 
 .character-selector {
