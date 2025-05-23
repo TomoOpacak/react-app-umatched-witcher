@@ -41,7 +41,7 @@ const HeartHP = ({ hp, animate, damageOrHeal, color = "red" }) => {
             C4,30,25,44,25,44s21-14,21-24.5C46,13.3,41.1,8,35,8z"
           fill={color}
           stroke="white"
-          strokeWidth="1"
+          strokeWidth="1.5"
           filter="url(#heartShadow)"
         />
 

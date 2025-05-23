@@ -12,6 +12,9 @@ import eredin from "../assets/images/eredin_hero.webp";
 import ladies from "../assets/images/ladies.webp";
 import detlaff from "../assets/images/detlaff.webp";
 import iorweth from "../assets/images/iorweth.webp";
+import brewess from "../assets/images/brewess.webp";
+import whispess from "../assets/images/whispess.webp";
+import weawess from "../assets/images/weawess.webp";
 import upcoming from "../assets/images/upcoming_hero.webp";
 
 const characters = [
@@ -135,23 +138,24 @@ const characters = [
     image: ladies,
     heroes: [
       {
-        name: "Brewess",
+        name: "Whispess",
         type: "melee",
-        image: upcoming,
+        image: whispess,
         hp: 6,
         color: "darkred",
       },
       {
-        name: "Whispess",
+        name: "Brewess",
         type: "melee",
-        image: upcoming,
+        image: brewess,
         hp: 6,
         color: "darkred",
       },
+
       {
         name: "Weawess",
         type: "melee",
-        image: upcoming,
+        image: weawess,
         hp: 6,
         color: "darkred",
       },
