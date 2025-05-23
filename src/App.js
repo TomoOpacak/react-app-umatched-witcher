@@ -3,138 +3,10 @@ import HeartHP from "./components/HeartHP";
 import ConfirmationModal from "./components/ConfirmationModal";
 import React, { useState, useEffect } from "react";
 import CharacterSelector from "./components/CharacterSelector";
-import geralt from "./assets/images/geralt_hero.webp";
-import jaskier from "./assets/images/jaskier_side.webp";
-import ciri from "./assets/images/ciri_hero.webp";
-import ihuarraquax from "./assets/images/ihuarraquax_side.webp";
-import leshen from "./assets/images/leshen_hero.webp";
-import djikstra from "./assets/images/djikstra_side.webp";
-import philipa from "./assets/images/philipa_hero.webp";
-import triss_yen from "./assets/images/triss_yen_hero.webp";
-import yen from "./assets/images/yen.webp";
-import triss from "./assets/images/triss.webp";
-import eredin from "./assets/images/eredin_hero.webp";
-import upcoming from "./assets/images/upcoming_hero.webp";
 import TypeIcon from "./components/TypeIcon";
 import AnimatedButton from "./components/AnimatedButton";
-
 import Footer from "./components/Footer";
-
-const characters = [
-  {
-    id: 1,
-    name: "Geralt",
-    type: "melee",
-    image: geralt,
-    hp: 16,
-    color: "grey",
-    sidekicks: [
-      {
-        name: "Jaskier",
-        type: "ranged",
-        image: jaskier,
-        hp: 5,
-        color: "purple",
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "Ciri",
-    type: "melee",
-    image: ciri,
-    hp: 15,
-    color: "turquoise",
-    sidekicks: [
-      {
-        name: "Ihuarraquax",
-        type: "ranged",
-        image: ihuarraquax,
-        hp: 7,
-        color: "lightblue",
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: "Leshen",
-    type: "melee",
-    image: leshen,
-    hp: 13,
-    color: "darkgreen",
-    sidekicks: [],
-  },
-  {
-    id: 4,
-    name: "Yennefer & Triss",
-    type: "ranged",
-    image: triss_yen,
-    hp: 14,
-    color: "crimson",
-    sidekicks: [
-      {
-        name: "Triss",
-        type: "ranged",
-        image: triss,
-        hp: 6,
-        color: "pink",
-      },
-    ],
-  },
-  {
-    id: 5,
-    name: "Philippa",
-    type: "ranged",
-    image: philipa,
-    hp: 12,
-    color: "orange",
-    sidekicks: [
-      {
-        name: "Dijkstra",
-        type: "melee",
-        image: djikstra,
-        hp: 6,
-        color: "beige",
-      },
-    ],
-  },
-  {
-    id: 6,
-    name: "Eredin",
-    type: "melee",
-    image: eredin,
-    hp: 14,
-    color: "darkred",
-    sidekicks: [],
-  },
-  {
-    id: 7,
-    name: "Dame Šume",
-    type: "melee",
-    image: upcoming,
-    hp: 14,
-    color: "darkred",
-    sidekicks: [],
-  },
-  {
-    id: 8,
-    name: "Detlaff",
-    type: "melee",
-    image: upcoming,
-    hp: 14,
-    color: "darkred",
-    sidekicks: [],
-  },
-  {
-    id: 9,
-    name: "Uskoro Dolazi",
-    type: "melee",
-    image: upcoming,
-    hp: 14,
-    color: "darkred",
-    sidekicks: [],
-  },
-];
+import characters from "./components/CharacterData";
 
 const RedXOverlay = () => (
   <svg
@@ -164,53 +36,52 @@ const App = () => {
   });
   const [showModal, setShowModal] = useState(false);
   const selectedCharacter = characters.find((c) => c.id === selectedId);
-  const [mainHP, setMainHP] = useState(0);
+  const [heroHPs, setHeroHPs] = useState([]);
+  const [heroAnimations, setHeroAnimations] = useState([]);
   const [sidekickHPs, setSidekickHPs] = useState([]);
-  const [mainAnimation, setMainAnimation] = useState({
-    animate: false,
-    type: null,
-  });
   const [sidekickAnimations, setSidekickAnimations] = useState([]);
-  const [isYenMain, setIsYenMain] = useState(true);
 
   useEffect(() => {
     if (selectedId === null || !selectedCharacter) return;
 
     localStorage.setItem("selectedId", selectedId);
 
-    if (selectedCharacter.name === "Yennefer & Triss") {
-      const saved = localStorage.getItem("yenMain") === "false" ? false : true;
-      setIsYenMain(saved);
-    }
-
-    const storedMainHP = localStorage.getItem(`mainHP-${selectedId}`);
-    const main = storedMainHP
-      ? parseInt(storedMainHP, 10)
-      : selectedCharacter.hp;
-    setMainHP(main);
+    const newHeroHPs = selectedCharacter.heroes.map((h, i) => {
+      const stored = localStorage.getItem(`heroHP-${selectedId}-${i}`);
+      return stored ? parseInt(stored, 10) : h.hp;
+    });
+    setHeroHPs(newHeroHPs);
+    setHeroAnimations(newHeroHPs.map(() => ({ animate: false, type: null })));
 
     const newSidekickHPs = selectedCharacter.sidekicks.map((s, i) => {
       const stored = localStorage.getItem(`sidekickHP-${selectedId}-${i}`);
       return stored ? parseInt(stored, 10) : s.hp;
     });
-
     setSidekickHPs(newSidekickHPs);
     setSidekickAnimations(
       newSidekickHPs.map(() => ({ animate: false, type: null }))
     );
   }, [selectedId]);
 
-  const updateMainHP = (newHP) => {
-    const prevHP = mainHP;
+  const updateHeroHP = (index, newHP) => {
+    const prevHP = heroHPs[index];
     const clamped = Math.max(0, newHP);
-    setMainHP(clamped);
-    localStorage.setItem(`mainHP-${selectedId}`, clamped);
+    const updated = [...heroHPs];
+    updated[index] = clamped;
+    setHeroHPs(updated);
+    localStorage.setItem(`heroHP-${selectedId}-${index}`, clamped);
 
     const isHealing = clamped > prevHP;
-    setMainAnimation({ animate: true, type: isHealing ? "healed" : "damaged" });
+    const newAnimations = [...heroAnimations];
+    newAnimations[index] = {
+      animate: true,
+      type: isHealing ? "healed" : "damaged",
+    };
+    setHeroAnimations(newAnimations);
 
     setTimeout(() => {
-      setMainAnimation({ animate: false, type: null });
+      newAnimations[index] = { animate: false, type: null };
+      setHeroAnimations([...newAnimations]);
     }, 300);
   };
 
@@ -239,24 +110,43 @@ const App = () => {
   const resetGame = () => {
     if (!selectedCharacter) return;
 
-    setMainHP(selectedCharacter.hp);
-    localStorage.setItem(`mainHP-${selectedId}`, selectedCharacter.hp);
+    const newHeroHPs = selectedCharacter.heroes.map((h, i) => {
+      localStorage.setItem(`heroHP-${selectedId}-${i}`, h.hp);
+      return h.hp;
+    });
+    setHeroHPs(newHeroHPs);
+    setHeroAnimations(newHeroHPs.map(() => ({ animate: false, type: null })));
 
     const newSidekickHPs = selectedCharacter.sidekicks.map((s, i) => {
       localStorage.setItem(`sidekickHP-${selectedId}-${i}`, s.hp);
       return s.hp;
     });
-
     setSidekickHPs(newSidekickHPs);
     setSidekickAnimations(
       newSidekickHPs.map(() => ({ animate: false, type: null }))
     );
   };
-  const handleSwapYenTriss = () => {
-    setIsYenMain((prev) => {
-      localStorage.setItem("yenMain", !prev);
-      return !prev;
-    });
+  const swapYenTriss = () => {
+    if (selectedCharacter.id !== 4) return;
+
+    // Swap the characters
+    const newHero = selectedCharacter.sidekicks[0];
+    const newSidekick = selectedCharacter.heroes[0];
+
+    selectedCharacter.heroes = [{ ...newHero, hp: 12 }];
+    selectedCharacter.sidekicks = [{ ...newSidekick, hp: 6 }];
+
+    // Set new HPs explicitly
+    setHeroHPs([12]);
+    setSidekickHPs([6]);
+
+    // Reset animations
+    setHeroAnimations([{ animate: false, type: null }]);
+    setSidekickAnimations([{ animate: false, type: null }]);
+
+    // Update localStorage with the fixed values
+    localStorage.setItem(`heroHP-${selectedId}-0`, 12);
+    localStorage.setItem(`sidekickHP-${selectedId}-0`, 6);
   };
 
   return (
@@ -273,152 +163,143 @@ const App = () => {
         />
       </div>
 
-      {selectedCharacter && (
-        <AnimatedButton
-          className="back-button"
-          onClick={() => {
-            setSelectedId(null);
-            localStorage.setItem("selectedId", "null");
-          }}
-          style={{ marginTop: "20px" }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{ transform: "translateY(-1px)" }}
-          >
-            <polyline points="9 18 3 12 9 6" />
-            <path d="M3 12h12a6 6 0 0 1 0 12" />
-          </svg>
-        </AnimatedButton>
-      )}
-
       {selectedCharacter ? (
         <>
-          <div className="character-container">
-            <div style={{ textAlign: "center", position: "relative" }}>
-              <div className="small-character-container">
-                <div style={{ position: "relative", display: "inline-block" }}>
-                  {mainHP === 0 && <RedXOverlay />}
-                  <img
-                    className="main-character-image"
-                    src={
-                      selectedCharacter.id === 4
-                        ? isYenMain
-                          ? yen
-                          : triss
-                        : selectedCharacter.image
-                    }
-                    alt={
-                      selectedCharacter.id === 4
-                        ? isYenMain
-                          ? "Yennefer"
-                          : "Triss"
-                        : selectedCharacter.name
-                    }
-                    style={{
-                      display: "block",
-                      border: `4px solid ${selectedCharacter.color}`,
-                    }}
-                  />
-                </div>
-                <p>
-                  <svg width="160" height="40" viewBox="0 0 160 40">
-                    <text
-                      x="50%"
-                      y="50%"
-                      dominantBaseline="middle"
-                      textAnchor="middle"
-                      fontSize="20"
-                      fontWeight="bold"
-                      fill="white"
-                      stroke="black"
-                      strokeWidth="3"
-                      paintOrder="stroke"
-                    >
-                      {selectedCharacter.id === 4
-                        ? isYenMain
-                          ? "Yennefer"
-                          : "Triss"
-                        : selectedCharacter.name}
-                    </text>
-                  </svg>
-                </p>
-              </div>
+          <AnimatedButton
+            className="back-button"
+            onClick={() => {
+              setSelectedId(null);
+              localStorage.setItem("selectedId", "null");
+            }}
+            style={{ marginTop: "20px" }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ transform: "translateY(-1px)" }}
+            >
+              <polyline points="9 18 3 12 9 6" />
+              <path d="M3 12h12a6 6 0 0 1 0 12" />
+            </svg>
+          </AnimatedButton>
 
-              <div>
-                <TypeIcon type={selectedCharacter.type} />
-              </div>
+          <div className="character-container">
+            {selectedCharacter.heroes.map((hero, index) => (
               <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: "10px",
-                }}
+                key={index}
+                style={{ textAlign: "center", position: "relative" }}
               >
-                <AnimatedButton
-                  className="hp-button"
-                  onClick={() => updateMainHP(mainHP - 1)}
-                  disabled={mainHP <= 0}
+                <div className="small-character-container">
+                  <div
+                    style={{ position: "relative", display: "inline-block" }}
+                  >
+                    {heroHPs[index] === 0 && <RedXOverlay />}
+                    <img
+                      className="main-character-image"
+                      src={hero.image}
+                      alt={hero.name}
+                      style={{
+                        display: "block",
+                        border: `4px solid ${hero.color}`,
+                      }}
+                    />
+                  </div>
+                  <p>
+                    <svg width="160" height="40" viewBox="0 0 160 40">
+                      <text
+                        x="50%"
+                        y="50%"
+                        dominantBaseline="middle"
+                        textAnchor="middle"
+                        fontSize="20"
+                        fontWeight="bold"
+                        fill="white"
+                        stroke="black"
+                        strokeWidth="3"
+                        paintOrder="stroke"
+                      >
+                        {hero.name}
+                      </text>
+                    </svg>
+                  </p>
+                </div>
+                <TypeIcon type={hero.type} />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "10px",
+                  }}
                 >
-                  <svg className="" width="24" height="24" viewBox="0 0 24 24">
-                    <text
-                      x="12"
-                      y="15"
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                      fontSize="32"
-                      fontWeight="bold"
-                      fill="white"
-                      stroke="black"
-                      strokeWidth="3.0"
-                      paintOrder="stroke"
+                  <AnimatedButton
+                    className="hp-button"
+                    onClick={() => updateHeroHP(index, heroHPs[index] - 1)}
+                    disabled={heroHPs[index] <= 0}
+                  >
+                    <svg
+                      className=""
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
                     >
-                      −
-                    </text>
-                  </svg>
-                </AnimatedButton>
-                <HeartHP
-                  hp={mainHP}
-                  animate={mainAnimation.animate}
-                  damageOrHeal={mainAnimation.type}
-                  color={selectedCharacter.color}
-                />
-                <AnimatedButton
-                  className="hp-button"
-                  onClick={() => updateMainHP(mainHP + 1)}
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24">
-                    <text
-                      x="12"
-                      y="15"
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                      fontSize="32"
-                      fontWeight="bold"
-                      fill="white"
-                      stroke="black"
-                      strokeWidth="3.0"
-                      paintOrder="stroke"
-                    >
-                      +
-                    </text>
-                  </svg>
-                </AnimatedButton>
+                      <text
+                        x="12"
+                        y="15"
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                        fontSize="32"
+                        fontWeight="bold"
+                        fill="white"
+                        stroke="black"
+                        strokeWidth="3.0"
+                        paintOrder="stroke"
+                      >
+                        −
+                      </text>
+                    </svg>
+                  </AnimatedButton>
+                  <HeartHP
+                    hp={heroHPs[index]}
+                    animate={heroAnimations[index]?.animate}
+                    damageOrHeal={heroAnimations[index]?.type}
+                    color={hero.color}
+                  />
+                  <AnimatedButton
+                    className="hp-button"
+                    onClick={() => updateHeroHP(index, heroHPs[index] + 1)}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                      <text
+                        x="12"
+                        y="15"
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                        fontSize="32"
+                        fontWeight="bold"
+                        fill="white"
+                        stroke="black"
+                        strokeWidth="3.0"
+                        paintOrder="stroke"
+                      >
+                        +
+                      </text>
+                    </svg>
+                  </AnimatedButton>
+                </div>
               </div>
-            </div>
+            ))}
             {selectedCharacter.id === 4 && (
               <div style={{ textAlign: "center", marginBottom: "1rem" }}>
                 <AnimatedButton
                   className="swap-button"
-                  onClick={handleSwapYenTriss}
+                  onClick={swapYenTriss}
                   title="Zamijeni Triss i Yennefer"
                 >
                   <svg
@@ -448,20 +329,8 @@ const App = () => {
                     {sidekickHPs[index] === 0 && <RedXOverlay />}
                     <img
                       className="sidekick-image"
-                      src={
-                        selectedCharacter.id === 4
-                          ? isYenMain
-                            ? triss
-                            : yen
-                          : sidekick.image
-                      }
-                      alt={
-                        selectedCharacter.id === 4
-                          ? isYenMain
-                            ? "Triss"
-                            : "Yennefer"
-                          : sidekick.name
-                      }
+                      src={sidekick.image}
+                      alt={sidekick.name}
                       style={{
                         display: "block",
                         border: `4px solid ${sidekick.color}`,
@@ -482,18 +351,12 @@ const App = () => {
                         strokeWidth="3"
                         paintOrder="stroke"
                       >
-                        {selectedCharacter.id === 4
-                          ? isYenMain
-                            ? "Triss"
-                            : "Yennefer"
-                          : sidekick.name}
+                        {sidekick.name}
                       </text>
                     </svg>
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <TypeIcon type={sidekick.type} />
-                </div>
+                <TypeIcon type={sidekick.type} />
                 <div
                   style={{
                     display: "flex",
