@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-app-umatched-witcher/static/css/main.7d103331.css",
-    "main.js": "/react-app-umatched-witcher/static/js/main.808eb165.js",
+    "main.js": "/react-app-umatched-witcher/static/js/main.8ad27b09.js",
     "static/js/453.01d26f34.chunk.js": "/react-app-umatched-witcher/static/js/453.01d26f34.chunk.js",
     "static/media/philipa_hero.webp": "/react-app-umatched-witcher/static/media/philipa_hero.475ca658eff96a1d1b7c.webp",
     "static/media/yen.webp": "/react-app-umatched-witcher/static/media/yen.4b1950dbeddb2d432b8b.webp",
@@ -10,18 +10,21 @@
     "static/media/geralt_hero.webp": "/react-app-umatched-witcher/static/media/geralt_hero.ca4c440ee4b0a7ef9a24.webp",
     "static/media/triss.webp": "/react-app-umatched-witcher/static/media/triss.6b65399567ca93bd2a7c.webp",
     "static/media/leshen_hero.webp": "/react-app-umatched-witcher/static/media/leshen_hero.72e44d7f67a94b651f89.webp",
+    "static/media/ladies.webp": "/react-app-umatched-witcher/static/media/ladies.c0ea1919fb33a07d9513.webp",
     "static/media/jaskier_side.webp": "/react-app-umatched-witcher/static/media/jaskier_side.903cfed014a776f6f5e4.webp",
+    "static/media/iorweth.webp": "/react-app-umatched-witcher/static/media/iorweth.7ae9463e4649dec61ef2.webp",
     "static/media/ciri_hero.webp": "/react-app-umatched-witcher/static/media/ciri_hero.3ba875168329c9e880a2.webp",
     "static/media/ihuarraquax_side.webp": "/react-app-umatched-witcher/static/media/ihuarraquax_side.ffded2aac1e5c0198a58.webp",
     "static/media/djikstra_side.webp": "/react-app-umatched-witcher/static/media/djikstra_side.4b49b8cff1189234178b.webp",
+    "static/media/detlaff.webp": "/react-app-umatched-witcher/static/media/detlaff.71c505bc217eea9628b8.webp",
     "static/media/upcoming_hero.webp": "/react-app-umatched-witcher/static/media/upcoming_hero.b72665d686fc35148d41.webp",
     "index.html": "/react-app-umatched-witcher/index.html",
     "main.7d103331.css.map": "/react-app-umatched-witcher/static/css/main.7d103331.css.map",
-    "main.808eb165.js.map": "/react-app-umatched-witcher/static/js/main.808eb165.js.map",
+    "main.8ad27b09.js.map": "/react-app-umatched-witcher/static/js/main.8ad27b09.js.map",
     "453.01d26f34.chunk.js.map": "/react-app-umatched-witcher/static/js/453.01d26f34.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7d103331.css",
-    "static/js/main.808eb165.js"
+    "static/js/main.8ad27b09.js"
   ]
 }
