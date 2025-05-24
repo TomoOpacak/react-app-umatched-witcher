@@ -11,8 +11,8 @@ import characters from "./components/CharacterData";
 const RedXOverlay = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="100"
-    height="100"
+    width="160"
+    height="160"
     viewBox="0 0 100 100"
     className="red-x-overlay" // attach the animation class
     style={{
