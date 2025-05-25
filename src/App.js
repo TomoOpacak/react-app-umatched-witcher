@@ -274,6 +274,7 @@ const App = () => {
                   <AnimatedButton
                     className="hp-button"
                     onClick={() => updateHeroHP(index, heroHPs[index] + 1)}
+                    disabled={heroHPs[index] === hero.hp}
                   >
                     <svg width="24" height="24" viewBox="0 0 24 24">
                       <text
@@ -399,6 +400,7 @@ const App = () => {
                     onClick={() =>
                       updateSidekickHP(index, sidekickHPs[index] + 1)
                     }
+                    disabled={sidekickHPs[index] === sidekick.hp}
                   >
                     <svg width="24" height="24" viewBox="0 0 24 24">
                       <text

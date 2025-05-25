@@ -28,9 +28,11 @@
   justify-content: center;
   gap: 20px;
   padding: 0px 20px;
-  margin-top: 40px;
+  margin-top: 20px;
 }
-
+.character-selector-title {
+  margin: 20px 0;
+}
 .character-name {
   margin-top: 8px;
   transition: transform 0.3s ease, filter 0.3s ease;
@@ -260,7 +262,7 @@
   width: 500px;
   height: 40px;
   animation: smoothPulse 1.5s ease-in-out infinite;
-  margin: 80px 0;
+  margin-bottom: 20px;
 }
 
 @keyframes smoothPulse {
