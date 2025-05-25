@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react-app-umatched-witcher/static/css/main.7d103331.css",
-    "main.js": "/react-app-umatched-witcher/static/js/main.88aaff98.js",
+    "main.css": "/react-app-umatched-witcher/static/css/main.7262fa3c.css",
+    "main.js": "/react-app-umatched-witcher/static/js/main.4e04a90a.js",
     "static/js/453.01d26f34.chunk.js": "/react-app-umatched-witcher/static/js/453.01d26f34.chunk.js",
     "static/media/philipa_hero.webp": "/react-app-umatched-witcher/static/media/philipa_hero.475ca658eff96a1d1b7c.webp",
     "static/media/yen.webp": "/react-app-umatched-witcher/static/media/yen.4b1950dbeddb2d432b8b.webp",
@@ -22,12 +22,12 @@
     "static/media/weawess.webp": "/react-app-umatched-witcher/static/media/weawess.328a7931c2e28c8437a6.webp",
     "static/media/upcoming_hero.webp": "/react-app-umatched-witcher/static/media/upcoming_hero.b72665d686fc35148d41.webp",
     "index.html": "/react-app-umatched-witcher/index.html",
-    "main.7d103331.css.map": "/react-app-umatched-witcher/static/css/main.7d103331.css.map",
-    "main.88aaff98.js.map": "/react-app-umatched-witcher/static/js/main.88aaff98.js.map",
+    "main.7262fa3c.css.map": "/react-app-umatched-witcher/static/css/main.7262fa3c.css.map",
+    "main.4e04a90a.js.map": "/react-app-umatched-witcher/static/js/main.4e04a90a.js.map",
     "453.01d26f34.chunk.js.map": "/react-app-umatched-witcher/static/js/453.01d26f34.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7d103331.css",
-    "static/js/main.88aaff98.js"
+    "static/css/main.7262fa3c.css",
+    "static/js/main.4e04a90a.js"
   ]
 }
