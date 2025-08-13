@@ -9,13 +9,6 @@ import triss_yen from "../assets/images/triss_yen_hero.webp";
 import yen from "../assets/images/yen.webp";
 import triss from "../assets/images/triss.webp";
 import eredin from "../assets/images/eredin_hero.webp";
-import ladies from "../assets/images/ladies.webp";
-import detlaff from "../assets/images/detlaff.webp";
-import iorweth from "../assets/images/iorweth.webp";
-import brewess from "../assets/images/brewess.webp";
-import whispess from "../assets/images/whispess.webp";
-import weawess from "../assets/images/weawess.webp";
-import upcoming from "../assets/images/upcoming_hero.webp";
 
 const characters = [
   {
@@ -45,7 +38,7 @@ const characters = [
     sidekicks: [
       {
         name: "Ihuarraquax",
-        type: "ranged",
+        type: "melee",
         image: ihuarraquax,
         hp: 7,
         color: "#a2dfdf",
@@ -59,7 +52,7 @@ const characters = [
     heroes: [
       {
         name: "Leshen",
-        type: "melee",
+        type: "ranged",
         image: leshen,
         hp: 13,
         color: "#45663b",
@@ -71,7 +64,6 @@ const characters = [
     id: 4,
     name: "Yennefer & Triss",
     image: triss_yen,
-    color: "#dc811a",
     heroes: [
       {
         name: "Yennefer",
@@ -117,10 +109,7 @@ const characters = [
   {
     id: 6,
     name: "Eredin",
-    type: "melee",
     image: eredin,
-    hp: 14,
-    color: "#454351",
     heroes: [
       {
         name: "Eredin",
@@ -128,66 +117,6 @@ const characters = [
         image: eredin,
         hp: 14,
         color: "#454351",
-      },
-    ],
-    sidekicks: [],
-  },
-  {
-    id: 7,
-    name: "Dame Šume",
-    image: ladies,
-    heroes: [
-      {
-        name: "Whispess",
-        type: "melee",
-        image: whispess,
-        hp: 6,
-        color: "darkred",
-      },
-      {
-        name: "Brewess",
-        type: "melee",
-        image: brewess,
-        hp: 6,
-        color: "darkred",
-      },
-
-      {
-        name: "Weawess",
-        type: "melee",
-        image: weawess,
-        hp: 6,
-        color: "darkred",
-      },
-    ],
-    sidekicks: [],
-  },
-  {
-    id: 8,
-    name: "Dettlaff",
-    image: detlaff,
-    heroes: [
-      {
-        name: "Detlaff",
-        type: "melee",
-        image: detlaff,
-        hp: 13,
-        color: "red",
-      },
-    ],
-    sidekicks: [],
-  },
-  {
-    id: 9,
-    name: "Iorweth",
-    image: iorweth,
-    heroes: [
-      {
-        name: "Iorweth",
-        type: "ranged",
-        image: iorweth,
-        hp: 13,
-        color: "lightgreen",
       },
     ],
     sidekicks: [],

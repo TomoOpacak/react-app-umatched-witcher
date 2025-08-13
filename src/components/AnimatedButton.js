@@ -1,34 +1,46 @@
-// components/AnimatedButton.jsx
-import React, { useRef } from "react";
-import "../css/style.css";
+import React, { useRef, useEffect } from "react";
+import beatSound from "../assets/sounds/click.mp3";
 
 const AnimatedButton = ({
   onClick,
   className = "",
   children,
   style = {},
+  sound = beatSound,
   ...props
 }) => {
   const btnRef = useRef(null);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    // Preload the audio once
+    const audio = new Audio(sound);
+    audio.preload = "auto";
+    audioRef.current = audio;
+  }, [sound]);
 
   const handleClick = (e) => {
-    // Safe check for the button
     const btn = btnRef.current;
+
+    // Animation logic
     if (btn) {
       btn.classList.remove("clicked");
-
-      // Trigger reflow to restart animation safely
       void btn.offsetWidth;
-
       btn.classList.add("clicked");
 
-      // Remove the class after animation completes
       setTimeout(() => {
-        if (btn) btn.classList.remove("clicked");
-      }, 150);
+        btn?.classList.remove("clicked");
+      }, 125);
     }
 
-    // Call the original click handler
+    // Reuse and reset audio for quick playback
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0; // Restart from beginning
+      audioRef.current.play().catch((err) => {
+        console.warn("Sound playback failed:", err);
+      });
+    }
+
     if (onClick) onClick(e);
   };
 

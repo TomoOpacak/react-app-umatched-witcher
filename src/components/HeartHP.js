@@ -1,5 +1,4 @@
 import React from "react";
-import "../css/style.css";
 
 const HeartHP = ({ hp, animate, damageOrHeal, color = "red" }) => {
   const animationClass = animate
@@ -9,19 +8,10 @@ const HeartHP = ({ hp, animate, damageOrHeal, color = "red" }) => {
     : "";
 
   return (
-    <div
-      style={{
-        width: "110px",
-        height: "110px",
-        overflow: "visible",
-        display: "inline-block",
-      }}
-    >
+    <div>
       <svg
         className={`heart-svg ${animationClass}`}
-        width="110"
-        height="110"
-        viewBox="0 0 50 50" // Expanded canvas
+        viewBox="0 0 50 50"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
@@ -45,18 +35,7 @@ const HeartHP = ({ hp, animate, damageOrHeal, color = "red" }) => {
           filter="url(#heartShadow)"
         />
 
-        <text
-          x="25"
-          y="28"
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fontSize="16"
-          fontWeight="bold"
-          fill="white"
-          stroke="black"
-          strokeWidth="2.0"
-          paintOrder="stroke"
-        >
+        <text className="heart-text" x="25" y="28">
           {hp}
         </text>
       </svg>

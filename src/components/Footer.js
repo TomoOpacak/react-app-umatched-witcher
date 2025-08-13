@@ -1,12 +1,12 @@
 const Footer = () => {
   return (
     <div>
-      <p>For personal use only. All rights reserved to the original authors.</p>
       <p>
-        This game is a fan-made project and is not intended for commercial use.
-        The game is based on the Unmached Card Game.
+        Sva prava pridržana izvornim autorima. Ovaj projekt je u svrhu
+        obrazovanja i nije namijenjen za komercijalnu upotrebu. Igra se temelji
+        na Unmatched Card Game.
       </p>
-      <p>Created by Reattera</p>
+      <p className="author">Izradio Tomo Opačak</p>
     </div>
   );
 };
