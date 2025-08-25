@@ -80,7 +80,7 @@ const characters = [
         name: "Yennefer",
         type: "ranged",
         image: yen,
-        hp: 12,
+        hp: 14,
         color: "#dc811a",
       },
     ],
