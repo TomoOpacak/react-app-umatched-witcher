@@ -1,50 +1,40 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
-export function useWakeLock() {
-  const wakeLockRef = useRef(null);
-
+export default function ScreenWake() {
   useEffect(() => {
-    let isSupported = "wakeLock" in navigator;
-    let handleVisibilityChange;
+    let wakeLock = null;
 
     async function requestWakeLock() {
+      if (!("wakeLock" in navigator)) {
+        console.log("Screen Wake Lock API is not supported by this browser.");
+        return;
+      }
+
       try {
-        if (isSupported) {
-          wakeLockRef.current = await navigator.wakeLock.request("screen");
-          console.log("Wake Lock is active");
+        wakeLock = await navigator.wakeLock.request("screen");
+        console.log("✅ Screen Wake Lock requested.");
 
-          // Automatically re-request if the tab becomes visible again
-          handleVisibilityChange = async () => {
-            if (
-              wakeLockRef.current !== null &&
-              document.visibilityState === "visible"
-            ) {
-              wakeLockRef.current = await navigator.wakeLock.request("screen");
-              console.log("Wake Lock re-acquired");
-            }
-          };
-
-          document.addEventListener("visibilitychange", handleVisibilityChange);
-        } else {
-          console.warn("Wake Lock API not supported on this device.");
-        }
+        // Handle when the wake lock is released by the browser (e.g., tab switch)
+        wakeLock.addEventListener("release", () => {
+          console.log("⚠️ Screen Wake Lock was released by the system.");
+        });
       } catch (err) {
-        console.error(`${err.name}, ${err.message}`);
+        console.error(
+          `Failed to request Wake Lock: ${err.name}, ${err.message}`
+        );
       }
     }
 
     requestWakeLock();
 
+    // Cleanup when unmounting
     return () => {
-      // Clean up on unmount
-      if (wakeLockRef.current) {
-        wakeLockRef.current.release().then(() => {
-          console.log("Wake Lock released");
-          wakeLockRef.current = null;
-        });
+      if (wakeLock) {
+        wakeLock.release();
+        console.log("🛑 Screen Wake Lock released manually.");
       }
-
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
+
+  return null;
 }
