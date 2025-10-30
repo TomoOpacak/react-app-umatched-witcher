@@ -8,6 +8,7 @@ import AnimatedButton from "./components/AnimatedButton";
 import Footer from "./components/Footer";
 import characters from "./components/CharacterData";
 import DeadCharacterOverlay from "./components/DeadCharacterOverlay";
+import ScreenAwake from "./components/ScreenAwake";
 
 const App = () => {
   const [selectedId, setSelectedId] = useState(() => {
@@ -130,6 +131,7 @@ const App = () => {
 
   return (
     <div className="main-container">
+      <ScreenAwake />
       <div
         className={`character-selector-wrapper ${
           selectedId !== null ? "slide-out" : "slide-in"

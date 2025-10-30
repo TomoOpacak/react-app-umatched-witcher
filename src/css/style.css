@@ -148,7 +148,13 @@
 .heart-svg:hover {
   transform: scale(1.15);
 }
-
+.hidden-video {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none; /* optional: prevents accidental clicks */
+}
 @keyframes pulseOutwards {
   0% {
     transform: scale(1);
