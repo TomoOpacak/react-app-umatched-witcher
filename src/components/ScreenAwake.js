@@ -1,40 +1,59 @@
 import React, { useEffect, useRef } from "react";
 const ScreenAwake = () => {
-  const videoRef = useRef(null);
-
   useEffect(() => {
-    const video = videoRef.current;
+    let wakeLock = null;
 
-    const startVideo = async () => {
+    // Request the wake lock
+    const requestWakeLock = async () => {
       try {
-        await video.play();
-        console.log("🔋 Screen kept awake via video playback");
+        wakeLock = await navigator.wakeLock.request("screen");
+        console.log("🔋 Screen Wake Lock active");
+
+        // Listen for when the wake lock is released
+        wakeLock.addEventListener("release", () => {
+          console.log("⚠️ Screen Wake Lock released");
+        });
       } catch (err) {
-        console.warn("Video wake lock failed:", err);
+        console.error("Wake Lock request failed:", err);
       }
     };
 
-    const enable = () => {
-      startVideo();
-      document.removeEventListener("click", enable);
-      document.removeEventListener("touchstart", enable);
+    // Handle visibility changes (e.g., user switches tabs or locks screen)
+    const handleVisibilityChange = async () => {
+      if (wakeLock !== null && document.visibilityState === "visible") {
+        try {
+          wakeLock = await navigator.wakeLock.request("screen");
+          console.log("🔄 Wake Lock re-acquired after visibility change");
+        } catch (err) {
+          console.error("Failed to re-acquire Wake Lock:", err);
+        }
+      }
     };
 
-    document.addEventListener("click", enable);
-    document.addEventListener("touchstart", enable);
+    // Request Wake Lock after user interaction
+    const enableWakeLock = () => {
+      requestWakeLock();
+      document.removeEventListener("click", enableWakeLock);
+      document.removeEventListener("touchstart", enableWakeLock);
+    };
+
+    document.addEventListener("click", enableWakeLock);
+    document.addEventListener("touchstart", enableWakeLock);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      video.pause();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      document.removeEventListener("click", enableWakeLock);
+      document.removeEventListener("touchstart", enableWakeLock);
+
+      if (wakeLock) {
+        wakeLock.release().then(() => {
+          console.log("🛑 Wake Lock released on cleanup");
+        });
+      }
     };
   }, []);
 
-  return (
-    <video ref={videoRef} playsInline muted loop className="hidden-video">
-      <source
-        src="data:video/mp4;base64,AAAAHGZ0eXBtcDQyAAAAAG1wNDFtcDQxaXNvbQAAABJtZGF0AAAAAA=="
-        type="video/mp4"
-      />
-    </video>
-  );
+  return null;
 };
 export default ScreenAwake;
