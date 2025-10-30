@@ -311,6 +311,31 @@
   background-color: #666;
   transform: rotate(180deg) scale(1.15);
 }
+/* Common button styles */
+.button-base {
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.button-active {
+  background-color: #22c55e;
+  color: white;
+}
+
+.button-inactive {
+  background-color: #8d8d8d;
+  color: white;
+}
+
+.button-inactive:hover {
+  background-color: #8d8d8d;
+}
 
 footer {
   width: 100%;

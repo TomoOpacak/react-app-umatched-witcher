@@ -63,30 +63,23 @@ export default function WakeLockButton() {
   if (!isSupported) {
     return (
       <div className="p-4 rounded-xl bg-red-100 text-red-600 text-center">
-        ⚠️ Your browser doesn’t support the Screen Wake Lock API.
+        ⚠️ Tvoj preglednik ne podržava Screen Wake Lock API.
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
+    <div>
       <button
         onClick={toggleWakeLock}
-        className={`px-6 py-3 rounded-2xl font-semibold shadow-md transition 
-          ${
-            isActive
-              ? "bg-green-500 text-white"
-              : "bg-blue-500 text-white hover:bg-blue-600"
-          }`}
+        className={`button-base ${
+          isActive ? "button-active" : "button-inactive"
+        }`}
       >
         {isActive
-          ? "🟢 Wake Lock Active — Tap to Release"
-          : "🟡 Activate Screen Wake Lock"}
+          ? "🟢 Zaslon Aktivan - Dodirni za Prekid"
+          : "🟡 Aktiviraj Buđenje Zaslona"}
       </button>
-
-      <p className="mt-4 text-gray-500 text-sm">
-        Keeps your screen awake while this page is open.
-      </p>
     </div>
   );
 }
