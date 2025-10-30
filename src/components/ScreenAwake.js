@@ -1,59 +1,50 @@
-import React, { useEffect, useRef } from "react";
-const ScreenAwake = () => {
+import { useEffect, useRef } from "react";
+
+export function useWakeLock() {
+  const wakeLockRef = useRef(null);
+
   useEffect(() => {
-    let wakeLock = null;
+    let isSupported = "wakeLock" in navigator;
+    let handleVisibilityChange;
 
-    // Request the wake lock
-    const requestWakeLock = async () => {
+    async function requestWakeLock() {
       try {
-        wakeLock = await navigator.wakeLock.request("screen");
-        console.log("🔋 Screen Wake Lock active");
+        if (isSupported) {
+          wakeLockRef.current = await navigator.wakeLock.request("screen");
+          console.log("Wake Lock is active");
 
-        // Listen for when the wake lock is released
-        wakeLock.addEventListener("release", () => {
-          console.log("⚠️ Screen Wake Lock released");
-        });
-      } catch (err) {
-        console.error("Wake Lock request failed:", err);
-      }
-    };
+          // Automatically re-request if the tab becomes visible again
+          handleVisibilityChange = async () => {
+            if (
+              wakeLockRef.current !== null &&
+              document.visibilityState === "visible"
+            ) {
+              wakeLockRef.current = await navigator.wakeLock.request("screen");
+              console.log("Wake Lock re-acquired");
+            }
+          };
 
-    // Handle visibility changes (e.g., user switches tabs or locks screen)
-    const handleVisibilityChange = async () => {
-      if (wakeLock !== null && document.visibilityState === "visible") {
-        try {
-          wakeLock = await navigator.wakeLock.request("screen");
-          console.log("🔄 Wake Lock re-acquired after visibility change");
-        } catch (err) {
-          console.error("Failed to re-acquire Wake Lock:", err);
+          document.addEventListener("visibilitychange", handleVisibilityChange);
+        } else {
+          console.warn("Wake Lock API not supported on this device.");
         }
+      } catch (err) {
+        console.error(`${err.name}, ${err.message}`);
       }
-    };
+    }
 
-    // Request Wake Lock after user interaction
-    const enableWakeLock = () => {
-      requestWakeLock();
-      document.removeEventListener("click", enableWakeLock);
-      document.removeEventListener("touchstart", enableWakeLock);
-    };
-
-    document.addEventListener("click", enableWakeLock);
-    document.addEventListener("touchstart", enableWakeLock);
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    requestWakeLock();
 
     return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      document.removeEventListener("click", enableWakeLock);
-      document.removeEventListener("touchstart", enableWakeLock);
-
-      if (wakeLock) {
-        wakeLock.release().then(() => {
-          console.log("🛑 Wake Lock released on cleanup");
+      // Clean up on unmount
+      if (wakeLockRef.current) {
+        wakeLockRef.current.release().then(() => {
+          console.log("Wake Lock released");
+          wakeLockRef.current = null;
         });
       }
+
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
-
-  return null;
-};
-export default ScreenAwake;
+}

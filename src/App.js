@@ -8,9 +8,10 @@ import AnimatedButton from "./components/AnimatedButton";
 import Footer from "./components/Footer";
 import characters from "./components/CharacterData";
 import DeadCharacterOverlay from "./components/DeadCharacterOverlay";
-import ScreenAwake from "./components/ScreenAwake";
+import { useWakeLock } from "./components/ScreenAwake";
 
 const App = () => {
+  useWakeLock();
   const [selectedId, setSelectedId] = useState(() => {
     const savedId = localStorage.getItem("selectedId");
     return savedId && savedId !== "null" ? parseInt(savedId, 10) : null;
@@ -131,7 +132,6 @@ const App = () => {
 
   return (
     <div className="main-container">
-      <ScreenAwake />
       <div
         className={`character-selector-wrapper ${
           selectedId !== null ? "slide-out" : "slide-in"
