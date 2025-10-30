@@ -8,7 +8,7 @@ import AnimatedButton from "./components/AnimatedButton";
 import Footer from "./components/Footer";
 import characters from "./components/CharacterData";
 import DeadCharacterOverlay from "./components/DeadCharacterOverlay";
-import ScreenWake from "./components/ScreenAwake";
+import WakeLockButton from "./components/WakeLockButton";
 const App = () => {
   const [selectedId, setSelectedId] = useState(() => {
     const savedId = localStorage.getItem("selectedId");
@@ -130,7 +130,6 @@ const App = () => {
 
   return (
     <div className="main-container">
-      <ScreenWake />
       <div
         className={`character-selector-wrapper ${
           selectedId !== null ? "slide-out" : "slide-in"
@@ -292,6 +291,7 @@ const App = () => {
             <button className="rpg-button" onClick={() => setShowModal(true)}>
               Završi igru
             </button>
+            <WakeLockButton />
           </div>
           {showModal && (
             <ConfirmationModal
